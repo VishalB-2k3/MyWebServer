@@ -37,12 +37,12 @@ pipeline {
         stage('Docker Push') {
             steps {
                 // Use Jenkins credentials for DockerHub login
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'Vishal Baskar', passwordVariable: 'Vini_240603')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
                         // Log into DockerHub with credentials
-                        sh 'echo 'Cfzpv4804#' | docker login -u 'vishalvb06' --password-stdin'
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                         // Push the Docker image to DockerHub
-                        sh 'docker push mywebapp'
+                        sh 'docker push $DOCKER_IMAGE'
                     }
                 }
             }
